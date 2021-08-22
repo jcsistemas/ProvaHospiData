@@ -1,0 +1,74 @@
+CREATE DATABASE "BD_HOSPIDATA"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+
+
+CREATE SEQUENCE GERA_ID_DEPTO AS INTEGER
+ INCREMENT 1 
+ MINVALUE 1 
+ NO MAXVALUE 
+ START 1;
+
+CREATE SEQUENCE GERA_ID_FUNCOES AS INTEGER
+ INCREMENT 1 
+ MINVALUE 1 
+ NO MAXVALUE 
+ START 1;
+
+CREATE SEQUENCE GERA_ID_EMPREGADOS AS INTEGER
+ INCREMENT 1 
+ MINVALUE 1 
+ NO MAXVALUE 
+ START 1;
+
+CREATE TABLE DEPARTAMENTOS(
+id_departamento integer not null primary key DEFAULT nextval('GERA_ID_DEPTO'),
+nm_departamento varchar(100),
+local varchar(100)
+);
+
+CREATE TABLE FUNCOES(
+id_funcao integer not null primary key DEFAULT nextval('GERA_ID_FUNCOES'),
+nm_funcao varchar(100)
+);
+
+CREATE TABLE EMPREGADOS(
+id_empregado integer not null primary key DEFAULT nextval('GERA_ID_EMPREGADOS'),
+cod_departamento integer not null references DEPARTAMENTOS(id_departamento),
+cod_emp_funcao integer not null references FUNCOES(id_funcao),
+nm_empregado varchar(100),
+nm_funcao varchar(100),
+data_admissao date,
+salario numeric(92,5),
+comissao numeric(92,5)
+);
+
+
+insert into DEPARTAMENTOS (nm_departamento, local) values ('Produção', 'Porto Alegre');
+insert into DEPARTAMENTOS (nm_departamento, local) values ('Almoxarifado', 'Porto Alegre');
+insert into DEPARTAMENTOS (nm_departamento, local) values ('Escritório', 'Porto Alegre');
+insert into DEPARTAMENTOS (nm_departamento, local) values ('Estacionamento', 'Porto Alegre');
+insert into DEPARTAMENTOS (nm_departamento, local) values ('Cozinha', 'Porto Alegre');
+
+insert into FUNCOES(nm_funcao) values ('Gerente');
+insert into FUNCOES(nm_funcao) values ('Vendedor Externo');
+insert into FUNCOES(nm_funcao) values ('Auxiliar Administrativo');
+insert into FUNCOES(nm_funcao) values ('Técnico de Produção');
+insert into FUNCOES(nm_funcao) values ('Vigilante');
+
+insert into EMPREGADOS (cod_departamento, cod_emp_funcao, nm_empregado, nm_funcao, data_admissao, salario, comissao)
+values (3, 1, 'Antônio Exemplo da Silva', 'Gerente', '1/3/2015', 6500.98 , 14.95);
+
+insert into EMPREGADOS (cod_departamento, cod_emp_funcao, nm_empregado, nm_funcao, data_admissao, salario, comissao)
+values (3, 1, 'Ana Lúcia Santos Exemplo', 'Gerente', '1/3/2010', 8750.98 , 15.95);
+
+insert into EMPREGADOS (cod_departamento, cod_emp_funcao, nm_empregado, nm_funcao, data_admissao, salario, comissao)
+values (2, 2, 'Renata Cardoso Exemplo', 'Vendedor Externo', '11/8/2011', 7750.98 , 18.95);
+
+insert into EMPREGADOS (cod_departamento, cod_emp_funcao, nm_empregado, nm_funcao, data_admissao, salario, comissao)
+values (2, 2, 'Ricardo Barbosa Exemplo', 'Vendedor Externo', '17/5/2012', 5750.98 , 18.95);
+
+insert into EMPREGADOS (cod_departamento, cod_emp_funcao, nm_empregado, nm_funcao, data_admissao, salario, comissao)
+values (4, 5, 'Rodrigo da Silva Exemplo', 'Vigilante', '17/5/2008', 3250 ,0 );
